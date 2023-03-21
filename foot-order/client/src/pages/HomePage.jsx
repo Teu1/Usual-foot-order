@@ -4,7 +4,7 @@ import menuler from "../yemekdata";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBurgers } from "../actions/burgerActions";
-import Spinner from "../components/Spinner";
+import Spinner from "../component/Spinner";
 
 function HomePage() {
   const [foods, setFoods] = useState([]);
