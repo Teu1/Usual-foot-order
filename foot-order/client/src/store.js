@@ -8,8 +8,14 @@ const finalReducer = combineReducers({
   getAllBurgersReducer: getAllBurgersReducer,
   addToCartReducer: addToCartReducer,
 });
-
-const initialState = {};
+const cartItems = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+const initialState = {
+  addToCartReducer: {
+    cartItems: cartItems,
+  },
+};
 
 const compose = composeWithDevTools({});
 
