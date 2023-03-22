@@ -13,9 +13,11 @@ function MenuList({ menu }) {
 
   const [ozellik, setOzellik] = useState("medium");
   const [miktar, setMiktar] = useState(1);
+
   const adetHandler = (e) => {
     setMiktar(e.target.value);
   };
+
   console.log(ozellik);
 
   const dispatch = useDispatch();
@@ -54,8 +56,8 @@ function MenuList({ menu }) {
         <div className="card-body">
           <h5 className="card-title">{menu.ad}</h5>
         </div>
-        <div className="row gap-2 justify-content-center">
-          <div className="col-md-5">
+        <div className="row">
+          <div className="col-md-6">
             <h5>Özellik</h5>
             <select
               name=""
@@ -70,23 +72,25 @@ function MenuList({ menu }) {
               ))}
             </select>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-6">
             <h5>Miktar</h5>
             <select
               name=""
               id=""
-              className="form-select mb-3 "
+              className="form-select mb-3"
               onChange={adetHandler}
             >
-              {[...Array(10).keys()].map((x) => (
-                <option value={x + 1}>{x + 1}</option>
+              {[...Array(10).keys()].map((x, index) => (
+                <option key={index} value={x + 1}>
+                  {x + 1}
+                </option>
               ))}
             </select>
           </div>
         </div>
         <div className="col-md-12 mt-3">
           <h6 className="text-danger">
-            Fiyat:{menu.fiyat[0][ozellik] * miktar} ₺
+            Fiyat: {menu.fiyat[0][ozellik] * miktar}
           </h6>
         </div>
         <div className="div">
