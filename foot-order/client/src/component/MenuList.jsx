@@ -11,7 +11,7 @@ function MenuList({ menu }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [ozellik, setOzellik] = useState("medium");
+  const [ozellik, setOzellik] = useState("small");
   const [miktar, setMiktar] = useState(1);
 
   const adetHandler = (e) => {
