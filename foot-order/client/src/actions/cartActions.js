@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+
 export const addToCartAction =
   (menu, miktar, ozellik) => (dispatch, getState) => {
     var cartItem = {
@@ -8,10 +9,12 @@ export const addToCartAction =
       ozellik: ozellik,
       miktar: Number(miktar),
       fiyat: menu.fiyat,
-      fiyatlar: menu.fiyat[0][ozellik] * miktar,
+      fiyatlar: menu.fiyat[0][ozellik] * Number(miktar),
       kategori: menu.kategori,
       desc: menu.desc,
     };
+
+    console.log(cartItem.fiyatlar);
     if (miktar < 1) {
       Swal.fire({
         title: "Emin misiniz?",

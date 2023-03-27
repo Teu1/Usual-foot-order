@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import AddMenu from "./AddMenu";
 import EditMenu from "./EditMenu";
 import MenusList from "./MenusList";
@@ -11,15 +12,27 @@ function AdminPage() {
   const userState = useSelector((state) => state.loginUserReducer);
   const navigate = useNavigate();
   const { currentUser } = userState;
-
+  // const user = localStorage.getItem("currentUser");
   useEffect(() => {
-    if (currentUser.isAdmin != true) {
+    if (currentUser == null || currentUser.isAdmin != true) {
       navigate("/");
     }
   }, [currentUser]);
 
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="dark"
+      />
       <h2 className="display-2 text-dark my-2 fw-bold">YÖNETİCİ PANELİ</h2>
       <hr />
       <nav className="navbar navbar-expand-lg bg-warning w-50 mx-auto">
