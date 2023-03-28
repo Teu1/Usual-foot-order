@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getBurgerById } from "../actions/burgerActions";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { editBurgerAction, getBurgerById } from "../actions/burgerActions";
 
 function EditMenu() {
   const dispatch = useDispatch();
   const { burgerid } = useParams();
-
+  console.log(burgerid);
   const getburgersbyidstate = useSelector(
     (state) => state.getBurgerByIdReducer
   );
   const { burger } = getburgersbyidstate;
   console.log("urger state", burger);
+
+  const getAllBurgers = useSelector((state) => state.getAllBurgersReducer);
+
+  const allburgers = getAllBurgers.burgers;
 
   const [ad, setAd] = useState("");
   const [smallPrice, setSmallPrice] = useState("");
@@ -21,23 +26,55 @@ function EditMenu() {
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("et");
 
+  const navigate = useNavigate();
+
+  const editBurgerState = useSelector((state) => state.editBurgerReducer);
+  const { editedBurger } = editBurgerState;
+
   const formHandler = (e) => {
     e.preventDefault();
+
+    const editedBurger = {
+      _id: burgerid,
+      ad: ad,
+      img: img,
+      desc: desc,
+      fiyat: {
+        small: smallPrice,
+        medium: mediumPrice,
+        mega: megaPrice,
+      },
+      kategori: category,
+    };
+
+    dispatch(editBurgerAction(editedBurger));
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Menü Güncelleme Başarılı",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    navigate("/admin/menulist");
   };
 
   useEffect(() => {
-    if (burger._id == burgerid) {
-      setAd(burger.ad);
-      setCategory(burger.kategori);
-      setDesc(burger.desc);
-      setImg(burger.img);
-      setSmallPrice(burger.fiyat[0]["small"]);
-      setMediumPrice(burger.fiyat[0]["medium"]);
-      setMegaPrice(burger.fiyat[0]["mega"]);
+    if (burger) {
+      if (burgerid == burger._id) {
+        setAd(burger.ad);
+        setCategory(burger.kategori);
+        setDesc(burger.desc);
+        setImg(burger.img);
+        setSmallPrice(burger.fiyat[0]["small"]);
+        setMediumPrice(burger.fiyat[0]["medium"]);
+        setMegaPrice(burger.fiyat[0]["mega"]);
+      } else {
+        dispatch(getBurgerById(burgerid));
+      }
     } else {
       dispatch(getBurgerById(burgerid));
     }
-  }, []);
+  }, [burger, dispatch, allburgers]);
   return (
     <div>
       <form className="w-75 m-auto abz" onSubmit={formHandler}>

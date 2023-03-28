@@ -50,5 +50,24 @@ router.post("/getBurgerById", async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
+//edit burger By Id
+router.post("/editBurger", async (req, res) => {
+  const editedBurger = req.body.editedBurger;
+
+  try {
+    const burger = await burgerModel.findOne({ _id: editedBurger._id });
+    burger.ad = editedBurger.ad;
+    burger.desc = editedBurger.desc;
+    burger.img = editedBurger.img;
+    burger.kategori = editedBurger.kategori;
+    burger.fiyat = [editedBurger.fiyat];
+
+    await burger.save();
+
+    res.send(burger);
+  } catch (error) {
+    res.status(400).json({ message: "bir hata var" });
+  }
+});
 
 module.exports = router;

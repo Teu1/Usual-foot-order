@@ -64,3 +64,24 @@ export const getBurgerByIdReducer = (state = { burger: null }, action) => {
       return state;
   }
 };
+export const editBurgerReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "EDIT_BURGER_REQUEST":
+      return {
+        loading: true,
+        ...state,
+      };
+    case "EDIT_BURGER_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+      };
+    case "EDIT_BURGER_FAILED":
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
